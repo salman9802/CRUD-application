@@ -7,7 +7,7 @@ export default ({ task, editTask, deleteTask }) => {
 
   return (
     <tr>
-      <td className='p-3 border border-gray-200 w-1/4'>{task.id}</td>
+      <td className='p-3 border border-gray-200 w-1/4'>{task._id}</td>
       <td className='p-3 border border-gray-200 capitalize flex flex-row justify-center items-center space-x-2'>
         {/* <span> */}
         {isEditing ? (
@@ -17,6 +17,13 @@ export default ({ task, editTask, deleteTask }) => {
             name='taskName'
             defaultValue={task.name}
             onChange={(e) => setEditValue((_) => e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter"
+                ? (console.log("enter"),
+                  setIsEditing(false),
+                  editTask(task._id, e.target.value))
+                : ""
+            }
           />
         ) : (
           <span>{task.name}</span>
@@ -27,7 +34,7 @@ export default ({ task, editTask, deleteTask }) => {
             <button
               onClick={(e) => {
                 setIsEditing(false);
-                editTask(task.id, editValue);
+                editTask(task._id, editValue);
               }}>
               <MdOutlineCheck />
             </button>
@@ -36,7 +43,7 @@ export default ({ task, editTask, deleteTask }) => {
               <button onClick={(_) => setIsEditing(true)}>
                 <MdModeEditOutline className='w-5 h-5' />
               </button>
-              <button onClick={(e) => deleteTask(task.id)}>
+              <button onClick={(e) => deleteTask(task._id)}>
                 <MdDelete className='text-red-600 w-5 h-5' />
               </button>
             </span>

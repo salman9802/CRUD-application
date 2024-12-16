@@ -6,5 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 80,
+    proxy: {
+      "/tasks": {
+        target: "http://localhost:8080/",
+      },
+    },
   },
 });
